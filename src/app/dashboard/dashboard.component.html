@@ -1,0 +1,116 @@
+<ul class="nav nav-pills  bg-back" id="pills-tab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <a class="nav-link  navList" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+       aria-controls="pills-home" aria-selected="true"> <i class="fa fa-camera text-light"></i></a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link active navList" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+       aria-controls="pills-profile" aria-selected="false">CHATS <span
+      class="badgeStyle badge badge-pill liStyle badge-primary">2</span></a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link navList" id="pills-status-tab" data-toggle="pill" href="#pills-status" role="tab"
+       aria-controls="pills-contact" aria-selected="false">STATUS</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link navList" id="pills-calls-tab" data-toggle="pill" href="#pills-calls" role="tab"
+       aria-controls="pills-contact" aria-selected="false">CALLS</a>
+  </li>
+</ul>
+<hr class="hrCss">
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+    <div class="bg-dark  pt-2 pb-2">
+
+      <div class="pl-2" *ngFor="let users of chatList">
+        <div class="row">
+          <div class="col-2">
+            <img [src]="users.imgURL" alt="" class="cover-item"
+                 style="border-radius: 50%; width: 35px; height: 35px;">
+          </div>
+          <div class="col-10">
+            <span class="text-white"> {{ users.userName}}</span> <small class="chat-text pull-right mr-3"> {{ users.time}}</small><br>
+            <small class="chat-text chatCss"> <i *ngIf="users.isSend" [ngClass]="{'text-info':users.isMsgSeen}" class="fas fa-check-double"></i> {{users.text}}</small>
+            <small class="chat-text pull-right mr-3"> <i *ngIf="users.isPinned" class="fa fa-thumbtack mr-3 searchBg"></i> </small>
+            <small class="chat-text pull-right mr-3"> <i *ngIf="users.isMute" class="fas fa-volume-mute mr-3"></i> </small>
+            <small *ngIf="users.isNew"
+              class="badgeStyle badge badge-pill liStyle badge-primary pull-right mr-2">2</small>
+            <hr class="hrCss mt-2">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="tab-pane fade" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">Camera</div>
+  <div class="tab-pane fade" id="pills-calls" role="tabpanel" aria-labelledby="pills-calls-tab">
+    <div class="bg-dark  pt-2 pb-2">
+
+      <div class="pl-2" *ngFor="let calls of callList">
+        <div class="row">
+          <div class="col-2">
+            <img [src]="calls.imgURL" alt="" class="cover-item"
+                 style="border-radius: 50%; width: 35px; height: 35px;">
+          </div>
+          <div class="col-10">
+            <span class="text-white"> {{ calls.userName}}</span><br>
+            <small  class="chat-text chatCss"> <i *ngIf="calls.callStatus === 'Incoming'" [ngStyle]="{'color' : calls.isMissed === true ? '#f24e4e' : '#00f9f6'}" class="fas fa-arrow-down"></i> <i [ngStyle]="{'color' : calls.isMissed === true ? '#f24e4e' : '#00f9f6'}" *ngIf="calls.callStatus === 'Outgoing'" class="fas fa-arrow-up"></i> ({{calls.count}}) {{calls.time}}</small>
+            <small class="chat-text pull-right mr-3"> <i *ngIf="calls.type === 'call'" class="fas fa-phone-alt mr-3" style="color: #00f9f6"></i> <i *ngIf="calls.type === 'vcall'" class="fas fa-video mr-3" style="color: #00f9f6"></i> </small>
+            <hr class="hrCss mt-2">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="tab-pane fade" id="pills-status" role="tabpanel" aria-labelledby="pills-status-tab">
+    <div class="bg-dark  pt-2 pb-2">
+      <div class=" pl-2">
+        <div class="row">
+          <div class="col-2">
+            <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg" alt="" class="cover-item"
+                 style="border-radius: 50%; width: 35px; height: 35px;">
+            <i style="position: absolute;top: 26px;left: 52px;color: #00f9f6" class="fa fa-plus-circle"></i>
+          </div>
+          <div class="col-10">
+            <span class="text-white"> My Status</span> <br>
+            <small class="chat-text chatCss"> Tap to add status update</small>
+
+          </div>
+        </div>
+        <div class="chat-text pl-2"> <small>Viewed updates</small></div>
+        <div  *ngFor="let status of viewedStatusList">
+          <div class="row">
+            <div class="col-2">
+              <img [src]="status.imgURL" alt="" class="cover-item" [ngStyle]="{'border' : status.statusNo}"
+                   style="border-radius: 50%; width: 35px; height: 35px;">
+            </div>
+            <div class="col-10">
+              <span class="text-white"> {{ status.userName}}</span><br>
+              <small class="chat-text chatCss"> {{ status.time}}</small><br>
+              <hr class="hrCss mt-2">
+            </div>
+          </div>
+        </div>
+        <div class="chat-text pl-2"> <small>Muted updates</small></div>
+        <div style="opacity: 0.5">
+          <div  *ngFor="let status of mutedStatusList">
+            <div class="row">
+              <div class="col-2">
+                <img [src]="status.imgURL" alt="" class="cover-item" [ngStyle]="{'border' : status.statusNo}"
+                     style="border-radius: 50%; width: 35px; height: 35px;">
+              </div>
+              <div class="col-10">
+                <span class="text-white"> {{ status.userName}}</span><br>
+                <small class="chat-text chatCss"> {{ status.time}}</small><br>
+                <hr class="hrCss mt-2">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
